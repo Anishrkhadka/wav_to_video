@@ -1,27 +1,41 @@
-# WAV to Video Converter (Streamlit App)
 
-This is a simple Streamlit web app that lets you upload a `.wav` audio file and a cover image (JPG or PNG), then generates a video (`.mp4`) using FFmpeg. The output is a static-cover video suitable for podcast platforms, YouTube, or social sharing.
+# 🎙️ WAV to Video Converter (with Static Cover)
+
+This is a simple Streamlit web app that allows you to upload a `.wav` audio file and a cover image (JPEG or PNG), and generates an `.mp4` video using FFmpeg. Perfect for publishing podcast episodes on platforms that require video format.
 
 ## Features
 
-- Drag-and-drop interface
-- WAV + cover image -> MP4 video
-- Instant preview and download
-- Built with Streamlit and FFmpeg
-- Local, offline-friendly setup
+- Drag-and-drop UI for uploading WAV and image files  
+- Converts to `.mp4` using FFmpeg with a static image  
+- Compatible with major podcast and video platforms  
+- One-click download of the generated video
+
 
 ## Requirements
 
-- [Micromamba](https://mamba.readthedocs.io/en/latest/micromamba-installation.html)
-- FFmpeg (installed via micromamba or system-wide)
+This project is designed to run in a **Micromamba** or **Conda** environment.
 
----
+### Create environment with micromamba
+```bash
+micromamba create -n wav2video python=3.11 streamlit ffmpeg -c conda-forge
+micromamba activate wav2video
+````
 
-## 📦 Setup Instructions
 
-### 1. Install Micromamba (if you haven’t)
 
-#### macOS / Linux:
+## Running the App
 
 ```bash
-curl micro.mamba.pm/install.sh | bash
+streamlit run app.py
+```
+
+Once running, open the browser link provided (usually [http://localhost:8501](http://localhost:8501)) and upload your `.wav` and cover image files.
+
+
+## How it Works
+
+The app wraps this FFmpeg command under the hood:
+
+```bash
+ffmpeg -loop 1 -i cover.jpg -i episode.wav -c:v libx264 -c:a aac -b:a 192k -shortest -pix_fmt yuv420p output.mp4
+```
