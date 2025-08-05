@@ -8,7 +8,7 @@ st.title("🎙️ WAV to Video Converter")
 st.markdown("Upload a `.wav` file and a cover image to create a video with a static image.")
 
 # Upload files
-audio_file = st.file_uploader("Upload a WAV file", type=["wav"])
+audio_file = st.file_uploader("Upload an audio file (WAV or M4A)", type=["wav", "m4a"])
 image_file = st.file_uploader("Upload a cover image", type=["jpg", "jpeg", "png"])
 
 # Create temp directory
@@ -18,7 +18,10 @@ output_dir.mkdir(exist_ok=True)
 if audio_file and image_file:
     audio_path = output_dir / audio_file.name
     image_path = output_dir / image_file.name
-    video_output = output_dir / f"{audio_file.name.rsplit('.', 1)[0]}.mp4"
+    # video_output = output_dir / f"{audio_file.name.rsplit('.', 1)[0]}.mp4"
+    base_name = Path(audio_file.name).stem
+    video_output = output_dir / f"{base_name}.mp4"
+
 
     # Save files
     with open(audio_path, "wb") as f:
