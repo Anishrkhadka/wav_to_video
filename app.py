@@ -2,6 +2,9 @@ import streamlit as st
 import subprocess
 from pathlib import Path
 
+import shutil
+
+
 st.set_page_config(page_title="WAV to Video Converter", layout="centered")
 
 st.title("🎙️ WAV to Video Converter")
@@ -12,8 +15,15 @@ audio_file = st.file_uploader("Upload an audio file (WAV or M4A)", type=["wav", 
 image_file = st.file_uploader("Upload a cover image", type=["jpg", "jpeg", "png"])
 
 # Create temp directory
+# Create or clean temp directory
 output_dir = Path("temp_uploads")
-output_dir.mkdir(exist_ok=True)
+if output_dir.exists():
+    # Delete existing files
+    for file in output_dir.iterdir():
+        if file.is_file():
+            file.unlink()
+else:
+    output_dir.mkdir()
 
 if audio_file and image_file:
     audio_path = output_dir / audio_file.name
