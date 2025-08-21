@@ -7,6 +7,4 @@ services:
       dockerfile: Dockerfile.dev
     ports:
       - "8501:8501"
-    volumes:
-      - /home/anish/bin/ffmpeg:/usr/bin/ffmpeg:ro
     container_name: wav-to-video-dev
